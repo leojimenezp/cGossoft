@@ -1,0 +1,57 @@
+<script src="/resources/node_modules/chart.js/dist/Chart.min.js"></script>
+
+{{>navigation}}
+
+<div class="dt-content-wrapper">
+    <div class="dt-content datos-planeacion">
+        <div class="dt-page-header">
+
+           <form action="" method="post">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <input type="text" name="consignacion" class="form-control" placeholder="Buscar consignacion">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" value="Buscar" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+
+            <br>
+            
+
+          <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Titulo</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Campo</th>
+                        <th class="text-center">Pozo</th>
+                        <th class="text-center">Contrato</th>
+                        <th class="text-center">Fecha estimada</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">ddddddddd</td>
+                        <td class="text-center">fff</td>
+                        <td class="text-center">ffff</td>
+                        <td class="text-center">ffffff</td>
+                        <td class="text-center">ffffffff</td>
+                        <td class="text-center">wifjj</td>
+                        <td class="text-center">Activo</td>
+                        <td class="text-center">
+                            <a href="/consignaciones/agregar" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/add.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>
+                                           
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

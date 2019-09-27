@@ -1,0 +1,130 @@
+<script src="/resources/node_modules/chart.js/dist/Chart.min.js"></script>
+
+{{>navigation}}
+
+<div class="dt-content-wrapper">
+    <div class="dt-content datos-planeacion">
+        <div class="dt-page-header">
+
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <a href="/planeacion/graficas" class="btn btn-primary">Volver a graficas</a>
+                </div>
+                <div class="col-md-4 col-xs-4"></div>
+                <div class="col-md-4 col-xs-4"></div>
+            </div>        
+
+            <br>
+
+            {{#each consulta}}
+            <form action="/equipo/equipos-herramientas/{{ id_planeacion }}" method="post">
+            {{/each}}
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <select name="dato" class="form-control">
+                            <option value="">Seleccione el tipo de equipo - herramienta</option>
+                            {{#each tipo_equipo_herramienta}}
+                                <option value="{{ id_tipo_equipo_herramienta }}">{{ nombre_equipo_herramienta }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" value="Buscar" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+
+            <br>
+
+            {{#each consulta}}    
+            <form action="/equipo/equipos-herramientas/agregar/{{ id_planeacion }}" method="POST">
+            {{/each}}
+                <div class="form-row" style="display: none;">
+                    <div class="form-group col-md-6">
+                        {{#each consultaEquipo}}
+                            <input name="id_tipo_equipo_herramienta" type="text" class="form-control" value="{{ id_tipo_equipo_herramienta }}">
+                        {{/each}}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{#each consulta}}
+                            <input name="id_planeacion" type="text" class="form-control" value="{{ id_planeacion }}">
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Equipo - Herramienta: </label>
+                        <select name="id_equipo_herramienta" class="form-control">
+                            <option value="">Primero Selecciona tipo equipo Herramienta</option>
+                            {{#each consultaEquipo}}
+                                <option value="{{ id_equipo }}">{{ nombre_equipo }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Cantidad: </label>
+                        <input name="cantidad" type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Unidad de medida: </label>
+                        <select name="id_unidad_medida" class="form-control">
+                            {{#each unidad_medida}}
+                                <option value="{{ id_unidad_medida }}">{{ nombre_unidad_medida }} - {{ abreviatura_unidad_medida }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Gasto: </label>
+                        <input name="gasto" type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Gasto standby: </label>
+                        <input name="gasto_standby" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Rubro: </label>
+                        <select name="id_rubro" class="form-control">
+                            {{#each rubros}}
+                                <option value="{{ id_rubro }}">{{ sigla_rubro }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Contado: </label>
+                        <input name="contado" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Credito: </label>
+                        <input name="credito" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Moneda: </label>
+                        <select name="id_moneda" class="form-control">
+                            {{#each monedas}}
+                                <option value="{{ id_moneda }}">{{ abreviatura_moneda }}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Observaciones: </label>
+                        <textarea name="observaciones" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Guardar" style="width: 100%" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

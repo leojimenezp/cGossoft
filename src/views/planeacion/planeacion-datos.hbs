@@ -1,0 +1,877 @@
+<script src="/resources/node_modules/chart.js/dist/Chart.min.js"></script>
+
+{{>navigation}}
+
+<div class="dt-content-wrapper">
+    <div class="dt-content datos-planeacion">
+        <div class="dt-page-header">
+
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <a href="" role="button" data-toggle="modal" data-target="#menu-planeacion" class="btn btn-primary">Menu Planeacion</a>
+                </div>
+                <div class="col-md-4 col-xs-4"></div>
+                <div class="col-md-4 col-xs-4">
+                    <a href="/planeacion" class="btn btn-primary">Salir Planeacion</a>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-1" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Facturacion: </h1>
+                        <h2>$164.950.000,00</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-2" src="/icons-planeacion/percentage-discount.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Costos Totales: </h1>
+                        <h2>$35.758.794,80</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-3" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Sub Contractacion</h1>
+                        <h2>$0,00</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-4" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Imprevistos</h1>
+                        <h2>$0,00</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-5" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Descuento</h1>
+                        <h2>$0,00</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-6" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion">
+                        <h1>Utilidad Bruta</h1>
+                        <h2>$129.167.205,20</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-7" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion margin-bottom">
+                        <h1>Utilidad Neta</h1>
+                        <h2>$79.682.205,20</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-8" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion gastos-10">
+                        <h1 style="font-size: 17px">Gastos Administracion&nbsp; (10%)</h1>
+                        <h2 style="margin-top: 10px;">$12.495.000,00</h2>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="icon">
+                        <img class="icon-color-9" src="/icons-planeacion/dollar-symbol.svg">
+                    </div>
+                    <div class="descripcion gastos-20">
+                        <h1 style="font-size: 17px">Gastos Mantenimiento (20%)</h1>
+                        <h2 style="margin-top: 10px;">$32.990.000,00</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SIGO ACA -->
+            
+            <div class="row graficas">
+
+            <!-- Area Chart -->
+            <div class="col-xl-10 col-lg-10 col-md-10">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold">Resultado General</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+
+<div class="modal fade" id="menu-planeacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary" type="button" id="menu-equipo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Equipo 
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="menu-equipo">
+                        <a id="equipo_equipos-herramientas" class="dropdown-item">Equipo y Herramienta</a>
+                        <a id="equipo_personal" class="dropdown-item">Personal</a>
+                        <a id="equipo_combustibles" class="dropdown-item">Combustibles</a>
+                        <a id="equipo_imprevistos" class="dropdown-item">Imprevistos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <button class="btn btn-primary" type="button" id="menu-movilizacion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Movilizacion
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="menu-movilizacion">
+                        <a id="movilizacion_vehiculos" class="dropdown-item">Vehiculos</a>
+                        <a id="movilizacion_personal" class="dropdown-item">Personal</a>
+                        <a id="movilizacion_combustibles" class="dropdown-item">Combustibles</a>
+                        <a id="movilizacion_imprevistos" class="dropdown-item">Imprevistos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+            <div style="display: none;" class="graficas-equipo">
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="grafica-1"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="grafica-2"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: none;" class="graficas-movilizacion">
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="grafica-3"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="grafica-4"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EQUIPO -->
+
+            <div style="display: none" class="equipo_equipos-herramientas">
+
+                <br>
+
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <h1>Equipos y Herramientas</h1>
+                    </div>
+                    <div class="col-md-9">
+                        {{#each consulta}}
+                        <a href="/equipo/equipos-herramientas/{{ id_planeacion }}" style="margin-top: 17px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                        </a>
+                        {{/each}}
+
+                    </div>
+                </div>
+
+                <br>
+
+                <table class="table-planeacion table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Descripcion</th>
+                            <th class="text-center">Unidad</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">Costo Unitario</th>
+                            <th class="text-center">Costo Standby</th>
+                            <th class="text-center">Contado</th>
+                            <th class="text-center">Credito</th>
+                            <th class="text-center">Total Costo</th>
+                            <th class="text-center">Moneda</th>
+                            <th class="text-center">Rubro</th>
+                            <th class="text-center">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each tb_equipo_item_equipo_herramienta}}
+                        <tr>
+                            <td class="text-center">{{ codigo_equipo }}</td>
+                            <td class="text-center">{{ nombre_unidad_medida }}</td>
+                            <td class="text-center">{{ cantidad }}</td>
+                            <td class="text-center">{{ gasto }}</td>
+                            <td class="text-center">{{ gasto_standby }}</td>
+                            <td class="text-center">{{ contado }}</td>
+                            <td class="text-center">{{ credito }}</td>
+                            <td class="text-center">Total Costo</td>
+                            <td class="text-center">{{ abreviatura_moneda }}</td>
+                            <td class="text-center">{{ sigla_rubro }}</td>
+                            <td class="text-center">
+                                <a href="/equipo/equipos-herramientas/eliminar/{{ id_equipo_item_equipo_herramienta }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                    <img src="/icons-planeacion/trash.svg" alt="">
+                                </a>
+                            </td>
+                        </tr>    
+                         {{/each}}                    
+                    </tbody>
+                </table>
+            </div>
+              
+          <div style="display: none;" class="equipo_personal">
+
+              <br>
+
+                <div class="form-row">
+                    <div class="col-md-1">
+                        <h1>Personal</h1>
+                    </div>
+                    <div class="col-md-11">
+                        {{#each consulta}}
+                        <a href="/equipo/personal/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Cargo</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Valor Bono</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_equipo_item_personal}}
+                        <tr>
+                            <td class="text-center">{{ nombre_cargo }}</td>
+                            <td class="text-center">{{ nombre_personal }} {{ apellido_personal }}</td>
+                            <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                            <td class="text-center">{{ cantidad }}</td>
+                            <td class="text-center">{{ costo }}</td>
+                            <td class="text-center">Valor Bono</td>
+                            <td class="text-center">Total Costo</td>
+                            <td class="text-center">{{ abreviatura_moneda }}</td>
+                            <td class="text-center">{{ sigla_rubro }}</td>
+                            <td class="text-center">
+                                <a href="/equipo/personal/eliminar/{{ id_equipo_item_personal }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                    <img src="/icons-planeacion/trash.svg" alt="">
+                                </a>
+                            </td>
+                        </tr>                        
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: none;" class="equipo_combustibles">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Combustibles</h1>
+                    </div>
+                    <div class="col-md-10">
+                        {{#each consulta}}
+                        <a href="/equipo/combustibles/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Item</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Contado</th>
+                        <th class="text-center">Credito</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_equipo_item_combustible}}
+                        <tr>
+                            <td class="text-center">{{ descripcion_item }}</td>
+                            <td class="text-center">{{ sigla_rubro }}</td>
+                            <td class="text-center">{{ cantidad }}</td>
+                            <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                            <td class="text-center">{{ contado }}</td>
+                            <td class="text-center">{{ credito }}</td>
+                            <td class="text-center">Costo Unitario</td>
+                            <td class="text-center">Total Costo</td>
+                            <td class="text-center">{{ abreviatura_moneda }}</td>
+                            <td class="text-center">
+                                <a href="/equipo/combustibles/eliminar/{{ id_equipo_item_combustible }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                    <img src="/icons-planeacion/trash.svg" alt="">
+                                </a>
+                            </td>
+                        </tr>                        
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style="display: none;" class="equipo_imprevistos">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Imprevistos</h1>
+                    </div>
+                    <div class="col-md-10">
+                        {{#each consulta}}
+                        <a href="/equipo/imprevistos/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Contado</th>
+                        <th class="text-center">Credito</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_equipo_item_imprevistos}}
+                    <tr>
+                        <td class="text-center">{{ descripcion }}</td>
+                        <td class="text-center">{{ fecha_imprevisto }}</td>
+                        <td class="text-center">{{ sigla_rubro }}</td>
+                        <td class="text-center">{{ cantidad }}</td>
+                        <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                        <td class="text-center">{{ costo_unitario }}</td>
+                        <td class="text-center">{{ contado }}</td>
+                        <td class="text-center">{{ credito }}</td>
+                        <td class="text-center">Total Costo</td>
+                        <td class="text-center">{{ abreviatura_moneda }}</td>
+                        <td class="text-center">
+                            <a href="equipo/imprevistos/eliminar/{{ id_equipo_item_imprevisto }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}                        
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MOVILIZACION -->
+
+        <div style="display: none;" class="movilizacion_vehiculos">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Vehiculos</h1>
+                    </div>
+                    <div class="col-md-1">
+                        {{#each consulta}}
+                        <a href="/movilizacion/vehiculos/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Costo Standby</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Credito</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_mov_item_vehiculos}}
+                    <tr>
+                        <td class="text-center">{{ placa_equipo }}</td>
+                        <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                        <td class="text-center">{{ cantidad }}</td>
+                        <td class="text-center">{{ gasto }}</td>
+                        <td class="text-center">{{ gasto_standby }}</td>
+                        <td class="text-center">Total Costo</td>
+                        <td class="text-center">{{ credito }}</td>
+                        <td class="text-center">{{ abreviatura_moneda }}</td>
+                        <td class="text-center">{{ sigla_rubro }}</td>
+                        <td class="text-center">
+                            <a href="movilizacion/vehiculos/eliminar/{{ id_mov_item_vehiculo }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>           
+                    {{/each}}             
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: none;" class="movilizacion_personal">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Personal</h1>
+                    </div>
+                    <div class="col-md-10">
+                        {{#each consulta}}
+                        <a href="/movilizacion/personal/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Cargos</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Asignacion</th>
+                        <th class="text-center">Vehiculo</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Valor Bono</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_mov_item_personal}}
+                    <tr>
+                        <td class="text-center">{{ nombre_cargo }}</td>
+                        <td class="text-center">{{ nombre_personal }} {{ apellido_personal }}</td>
+                        <td class="text-center">{{ descripcion }}</td>
+                        <td class="text-center">{{ placa_equipo }}</td>
+                        <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                        <td class="text-center">{{ cantidad }}</td>
+                        <td class="text-center">{{ costo }}</td>
+                        <td class="text-center">Valor Bono</td>
+                        <td class="text-center">Total Costo</td>
+                        <td class="text-center">{{ abreviatura_moneda }}</td>
+                        <td class="text-center">{{ sigla_rubro }}</td>
+                        <td class="text-center">
+                            <a href="/movilizacion/personal/eliminar/{{ id_mov_item_personal }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>      
+                    {{/each}}                  
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: none;" class="movilizacion_combustibles">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Combustibles</h1>
+                    </div>
+                    <div class="col-md-10">
+                        {{#each consulta}}
+                        <a href="/movilizacion/combustibles/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Item</th>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_mov_item_combustibles}}
+                    <tr>
+                        <td class="text-center">{{ descripcion_item }}</td>
+                        <td class="text-center">{{ nombre_rubro }}</td>
+                        <td class="text-center">{{ sigla_rubro }}</td>
+                        <td class="text-center">{{ cantidad }}</td>
+                        <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                        <td class="text-center">{{ costo_unitario }}</td>
+                        <td class="text-center">Total Costo</td>
+                        <td class="text-center">{{ abreviatura_moneda }}</td>
+                        <td class="text-center">
+                            <a href="movilizacion/combustible/eliminar/{{ id_mov_item_combustible }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>                        
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: none;" class="movilizacion_imprevistos">
+
+            <br>
+
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <h1>Imprevistos</h1>
+                    </div>
+                    <div class="col-md-10">
+                        {{#each consulta}}
+                        <a href="/movilizacion/imprevistos/{{ id_planeacion }}" style="margin-top: 17px; margin-left: 20px;" class="btn-agregar-planeacion btn btn-primary text-white dt-fab-btn">
+                           <img src="/icons-planeacion/add.svg" alt="">
+                       </a>
+                       {{/each}}
+                    </div>
+                </div>
+
+                <br>
+
+              <table class="table-planeacion table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Rubro</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Unidad</th>
+                        <th class="text-center">Costo Unitario</th>
+                        <th class="text-center">Total Costo</th>
+                        <th class="text-center">Moneda</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tb_mov_item_imprevistos}}
+                    <tr>
+                        <td class="text-center">{{ descripcion }}</td>
+                        <td class="text-center">{{ fecha_imprevisto }}</td>
+                        <td class="text-center">{{ sigla_rubro }}</td>
+                        <td class="text-center">{{ cantidad }}</td>
+                        <td class="text-center">{{ abreviatura_unidad_medida }}</td>
+                        <td class="text-center">{{ costo_unitario }}</td>
+                        <td class="text-center">Total Costo</td>
+                        <td class="text-center">{{ abreviatura_moneda }}</td>
+                        <td class="text-center">
+                            <a href="/movilizacion/imprevistos/eliminar/{{ id_mov_item_imprevisto }}" class="btn-eliminar-planeacion btn btn-success text-white dt-fab-btn">
+                                <img src="/icons-planeacion/trash.svg" alt="">
+                            </a>
+                        </td>
+                    </tr>                        
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- GRAFICA -->
+
+<script>
+    var data = {{numeros}};
+    var datos = [2000,3000,1000,6000,4000,2000];
+</script>
+
+<script>
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Facturacion', 'Terceros', 'Gastos', 'Rent. Bruta', 'Rent. Neta', 'Imprevistos'],
+            datasets: [{
+                label: 'Resultado General',
+                data: datos,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx2 = document.getElementById('grafica-1').getContext('2d');
+    var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['Subcontratado', 'Sub.Credito', 'Sub.Contado', 'Consumibles', 'Cons.Credito', 'Cons.Contado'],
+            datasets: [{
+                label: 'Control Movilizacion Subcontado',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx4 = document.getElementById('grafica-2').getContext('2d');
+    var myChart = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: ['AM', 'CO', 'IM', 'PE', 'PJ', 'PS'],
+            datasets: [{
+                label: 'Control Movilizacion Rubros',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx7 = document.getElementById('grafica-3').getContext('2d');
+    var myChart = new Chart(ctx7, {
+        type: 'bar',
+        data: {
+            labels: ['Subcontratado', 'Sub.Credito', 'Sub.Contado', 'Consumibles', 'Cons.Credito', 'Cons.Contado'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx8 = document.getElementById('grafica-4').getContext('2d');
+    var myChart = new Chart(ctx8, {
+        type: 'bar',
+        data: {
+            labels: ['AM', 'CO', 'IM', 'PE', 'PJ', 'PS'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+
